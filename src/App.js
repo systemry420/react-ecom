@@ -9,6 +9,7 @@ import {
   ErrorPage,
   PrivateRoute,
   ProductsPage,
+  AboutPage,
   SingleProductPage
 } from './pages'
 
@@ -17,12 +18,27 @@ function App() {
     <Navbar />
     <Sidebar />
     <Switch>
-      <Route exact path='/' element={<HomePage />} />
-      <Route path='/cart' element={<CartPage />} />
-      <Route path='/checkout' element={<CheckoutPage />} />
-      <Route path='/products' element={<ProductsPage />} />
-      <Route path='/products/:id' element={<SingleProductPage />} />
-      <Route path='*' element={<ErrorPage />} />
+      <Route exact path='/'>
+        <HomePage />
+      </Route>
+      <Route path='/about'>
+        <AboutPage />
+      </Route>
+      <Route path='/cart'>
+        <CartPage />
+      </Route>
+      <Route path='/checkout'>
+        <CheckoutPage />
+      </Route>
+      <Route path='/products'>
+        <ProductsPage />
+      </Route>
+      <Route path='/products/:id'>
+        <SingleProductPage />
+      </Route>
+      <Route path='*'>
+        <ErrorPage />
+      </Route>
     </Switch>
     <Footer />
   </Router>
