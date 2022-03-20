@@ -15,7 +15,65 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const SingleProductPage = () => {
-  return <h4>single product page</h4>
+  const { id } = useParams()
+  const {
+    singleProduct: product,
+    singleProductLoading: loading,
+    singleProductError: error,
+    fetchSingleProduct
+  } = useProductsContext()
+
+  useEffect(() => {
+    console.log(`${url}${id}`);
+    fetchSingleProduct(`${url}${id}`)
+    return () => {
+    };
+  }, []);
+
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <Error />
+  }
+  
+  const { 
+    name, 
+    price, 
+    description, 
+    stock, 
+    stars, 
+    reviews, 
+    images, 
+    company} = product;
+
+  return <Wrapper>
+    <PageHero title={name} />
+    <div className='section section-center page'>
+      <div className='product-center'>
+        <ProductImages images={images} />
+        <div className='content'>
+          <h2>{name}</h2>
+          <Stars />
+          <h5>{formatPrice(price)}</h5>
+          <p className='desc'>{description}</p>
+          <p className='info'>
+            <span>Available</span>
+            {stock}
+          </p>
+          <p className='info'>
+            <span>SKU</span>
+            {id}
+          </p>
+          <p className='info'>
+            <span>Company</span>
+            {company}
+          </p>
+        </div>
+      </div>
+    </div>
+  </Wrapper>
 }
 
 const Wrapper = styled.main`

@@ -30,12 +30,10 @@ function App() {
       <Route path='/checkout'>
         <CheckoutPage />
       </Route>
-      <Route path='/products'>
+      <Route exact path='/products'>
         <ProductsPage />
       </Route>
-      <Route path='/products/:id'>
-        <SingleProductPage />
-      </Route>
+      <Route path='/products/:id' children={<SingleProductPage />} />
       <Route path='*'>
         <ErrorPage />
       </Route>
