@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useProductsContext } from '../context/products_context'
 import { single_product_url as url } from '../utils/constants'
 import { formatPrice } from '../utils/helpers'
@@ -12,7 +12,6 @@ import {
   PageHero,
 } from '../components'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 const SingleProductPage = () => {
   const { id } = useParams()
@@ -55,7 +54,7 @@ const SingleProductPage = () => {
         <ProductImages images={images} />
         <div className='content'>
           <h2>{name}</h2>
-          <Stars />
+          <Stars stars={stars} reviews={reviews} />
           <h5>{formatPrice(price)}</h5>
           <p className='desc'>{description}</p>
           <p className='info'>
@@ -70,6 +69,8 @@ const SingleProductPage = () => {
             <span>Company</span>
             {company}
           </p>
+          <hr />
+          {stock > 0 && <AddToCart product={product} />}
         </div>
       </div>
     </div>
