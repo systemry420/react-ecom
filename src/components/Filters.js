@@ -17,6 +17,8 @@ const Filters = () => {
   const uniqueCategory = getUniqueValues(allProducts, 'category')
   const uniqueColor = getUniqueValues(allProducts, 'colors')
 
+  console.log(color);
+
   return (
     <Wrapper>
       <form onSubmit={(e) => e.preventDefault()}>
@@ -53,6 +55,32 @@ const Filters = () => {
             })}
           </select>
         </div>
+
+        <div className='form-control'>
+          <h5>Color</h5>
+          <div className='colors'>
+            {uniqueColor.map((c, i) => {
+              if (c === 'all') {
+                return <button 
+                onClick={updateFilters}
+                data-color={'all'}
+                className={`all-btn ${c === color? 'active':''}`}>All</button>
+              }
+
+              return <button
+                key={i}
+                style={{background: c}}
+                onClick={updateFilters}
+                data-color={c}
+                name='color'
+                className={`color-btn ${c === color? 'active':''}`}
+              >
+                {c === color && <FaCheck />}
+              </button>
+            })}
+          </div>
+        </div>
+
       </form>
     </Wrapper>
   );
