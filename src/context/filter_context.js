@@ -24,6 +24,7 @@ const initialState = {
     category: 'all',
     minPrice: 0,
     maxPrice: 0,
+    price: 0,
     shipping: false
   }
 }
@@ -66,12 +67,17 @@ export const FilterProvider = ({ children }) => {
     if (name === 'color') {
       value = e.target.dataset.color
     }
-    console.log(value);
+    if (name === 'price') {
+      value = +value
+    }
+    if (name === 'shipping') {
+      value = e.target.checked
+    }
     dispatch({ type: UPDATE_FILTERS, payload: {name, value}})
   }
 
   const clearFilters = () => {
-
+    dispatch({ type: CLEAR_FILTERS })
   }
 
   return (

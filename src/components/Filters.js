@@ -7,7 +7,7 @@ import { FaCheck } from 'react-icons/fa'
 const Filters = () => {
   const {
     filters: {
-      text, company, category, color,
+      text, company, category, color, price,
       minPrice, maxPrice, shipping
     },
     updateFilters, clearFilters, allProducts
@@ -16,8 +16,6 @@ const Filters = () => {
   const uniqueCompany = getUniqueValues(allProducts, 'company')
   const uniqueCategory = getUniqueValues(allProducts, 'category')
   const uniqueColor = getUniqueValues(allProducts, 'colors')
-
-  console.log(color);
 
   return (
     <Wrapper>
@@ -81,7 +79,18 @@ const Filters = () => {
           </div>
         </div>
 
+        <div className='form-control'>
+          <h5>Price</h5>
+          <p className='price'>{formatPrice(price)}</p>
+          <input type='range' value={price} min={minPrice} max={maxPrice} name='price' onChange={updateFilters}/>
+        </div>
+
+        <div className='form-control'>
+          <h5>Free Shipping</h5>
+          <input type='checkbox' onChange={updateFilters} checked={shipping} name='shipping' />
+        </div>
       </form>
+      <button className='clear-btn' onClick={clearFilters}>Clear Filters</button>
     </Wrapper>
   );
 }

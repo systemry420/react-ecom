@@ -64,8 +64,67 @@ const filter_reducer = (state, action) => {
 
     case UPDATE_FILTERS:
       let { name, value } = action.payload
-      return {...state, filters: {...state.filters, [name]: value}}
+      const { allProducts } = state
+      let tempProducts = [...allProducts]
+      const {
+        text, category, company, color, price, shipping
+      } = state.filters
 
+      if (text) {
+        tempProducts = tempProducts.filter(p => {
+          return p.name.startsWith(text)
+        })
+      }
+
+      if (category !== 'all') {
+        tempProducts = tempProducts.filter(p => {
+          return p.category === category
+        })
+      }
+
+      if (company !== 'all') {
+        tempProducts = tempProducts.filter(p => {
+          return p.company === company
+        })
+      }
+
+      if (color !== 'all') {
+        tempProducts = tempProducts.filter(p => {
+          return p.colors.find(c => {
+            return c === color
+          })
+        })
+      }
+
+      if (shipping) {
+        tempProducts = tempProducts.filter(p => {
+          return p.shipping === true
+        })
+      }
+
+      tempProducts = tempProducts.filter(p => {
+        return p.price <= price
+      })
+
+      return { 
+        ...state, 
+        filteredProducts: tempProducts,
+        filters: { ...state.filters, [name]: value } 
+      }
+
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          text: '',
+          company: 'all',
+          color: 'all',
+          category: 'all',
+          price: state.filters.maxPrice,
+          shipping: false
+        }
+      }
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
   }
