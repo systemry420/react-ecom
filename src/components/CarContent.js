@@ -15,6 +15,7 @@ const CartContent = () => {
       <CartItem key={item.id} {...item} />
     ))}
     
+    <CartTotals />
   </Wrapper>
 }
 const Wrapper = styled.section`

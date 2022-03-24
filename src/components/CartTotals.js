@@ -6,7 +6,21 @@ import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 
 const CartTotals = () => {
-  return <h4>cart totals</h4>
+  const { total_amount, shipping_fee } = useCartContext()
+
+  return <Wrapper>
+      <div>
+        <article>
+          <h5>Subtotal : {total_amount}</h5>
+          <p>Shipping : {shipping_fee} </p>
+          <hr />
+          <h4>
+            Order total {total_amount + shipping_fee}
+          </h4>
+        </article>
+        <Link className='btn' to='/checkout'>checkout</Link>
+      </div>
+  </Wrapper>
 }
 
 const Wrapper = styled.section`
