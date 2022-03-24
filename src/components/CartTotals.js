@@ -11,11 +11,11 @@ const CartTotals = () => {
   return <Wrapper>
       <div>
         <article>
-          <h5>Subtotal : {total_amount}</h5>
-          <p>Shipping : {shipping_fee} </p>
+          <h5>Subtotal: <span>{formatPrice(total_amount)}</span></h5>
+          <p>Shipping: <span>{formatPrice(shipping_fee)}</span> </p>
           <hr />
           <h4>
-            Order total {total_amount + shipping_fee}
+            Order total: <span>{formatPrice(total_amount + shipping_fee)}</span>
           </h4>
         </article>
         <Link className='btn' to='/checkout'>checkout</Link>
