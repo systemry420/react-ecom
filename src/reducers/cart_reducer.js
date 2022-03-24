@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react'
 import {
   ADD_TO_CART,
   CLEAR_CART,
@@ -42,6 +43,40 @@ const cart_reducer = (state, action) => {
     case REMOVE_CART_ITEM:
       const tempCart = state.cart.filter(i => i.id !== action.payload)
       return {...state, cart: tempCart}
+
+    case TOGGLE_CART_ITEM_AMOUNT: {
+      const {id, value} = action.payload;
+
+      const cart = state.cart.map(item => {
+        if (item.id === id) {
+          if (value === 'inc') {
+            let newAmount = item.amount + 1
+            if (newAmount > item.max)
+              newAmount = item.max
+            return {...item, amount: newAmount}
+          } else {
+            let newAmount = item.amount - 1
+            if (newAmount < 1) 
+              newAmount = 1
+            return {...item, amount: newAmount}
+          }
+        }
+        return item
+      })
+      return {...state, cart: cart}
+    }
+
+    case COUNT_CART_TOTALS:
+      const { total_items, total_amount } = state.cart.reduce((total, item) => {
+        const { amount, price } = item
+        total.total_items += amount
+        total.total_amount += price * amount
+        return total
+      }, {
+        total_amount: 0, total_items: 0
+      })
+
+      return {...state, total_amount, total_items}
 
     default:
       throw new Error(`No Matching "${action.type}" - action type`)
